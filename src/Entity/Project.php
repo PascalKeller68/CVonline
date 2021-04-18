@@ -35,10 +35,10 @@ class Project
     /**
      * @ORM\Column(type="array", nullable=true)
      */
-    private $projectLanguages = [];
+    private $projectLanguage = [];
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="relationProjects")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="raltionProjects")
      * @ORM\JoinColumn(nullable=false)
      */
     private $relationUser;
@@ -84,14 +84,14 @@ class Project
         return $this;
     }
 
-    public function getProjectLanguages(): ?array
+    public function getProjectLanguage(): ?array
     {
-        return $this->projectLanguages;
+        return $this->projectLanguage;
     }
 
-    public function setProjectLanguages(?array $projectLanguages): self
+    public function setProjectLanguage(?array $projectLanguage): self
     {
-        $this->projectLanguages = $projectLanguages;
+        $this->projectLanguage = $projectLanguage;
 
         return $this;
     }
