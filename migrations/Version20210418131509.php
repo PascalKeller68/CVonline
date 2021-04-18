@@ -25,7 +25,7 @@ final class Version20210418131509 extends AbstractMigration
         $this->addSql('ALTER TABLE project ADD CONSTRAINT FK_2FB3D0EEBE15C1E4 FOREIGN KEY (relation_user_id) REFERENCES user (id)');
 
         $this->addSql('INSERT INTO user (email, roles, password, name, last_name) 
-        VALUES ("pascalkeller99@gmail.com", "USER_ADMIN","$2y$12$gPiPxVqblvxBwUkDve.D4ekuFVDwhMxeOPCubxr/NNwGzDeoNL6lq", "Keller", "pascal")');
+        VALUES ("pascalkeller99@gmail.com", "ROLE_ADMIN","$2y$12$gPiPxVqblvxBwUkDve.D4ekuFVDwhMxeOPCubxr/NNwGzDeoNL6lq", "Keller", "pascal")');
     }
 
     public function down(Schema $schema): void

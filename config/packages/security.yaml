@@ -1,36 +1,31 @@
 security:
     encoders:
             App\Entity\User:
-                algorithm: auto
-
+                algorithm: bcrypt
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         users_in_memory: { memory: null }
-        in_database:
-            entity:
-                class: App\Entity\User
-                property: email
-        # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
             entity:
                 class: App\Entity\User
-                property: email
+                property: mail
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: true
-            lazy: true
-            #provider: users_in_memory
-            provider: in_database
-            form_login:
-                login_path: Login
-                check_path: Login
-
+            lazy: true            
+            provider: app_user_provider
+            guard:
+                authenticators:
+                    - App\Security\AppLoginAuthenticator
+            
             logout:
-                path: Logout
-                target: home
+                path: app_logout
+                target: /
+                # where to redirect after logout
+                # target: app_any_route
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
