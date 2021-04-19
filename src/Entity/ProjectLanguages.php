@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\ProjectLanguagesRepository;
+
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ProjectLanguagesRepository;
 
 /**
  * @ORM\Entity(repositoryClass=ProjectLanguagesRepository::class)
@@ -26,6 +27,12 @@ class ProjectLanguages
      * @ORM\Column(type="integer")
      */
     private $languageUse;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Project::class, inversedBy="projectLanguages")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $relationLanguage;
 
     public function getId(): ?int
     {
@@ -52,6 +59,18 @@ class ProjectLanguages
     public function setLanguageUse(int $languageUse): self
     {
         $this->languageUse = $languageUse;
+
+        return $this;
+    }
+
+    public function getRelationLanguage(): ?Project
+    {
+        return $this->relationLanguage;
+    }
+
+    public function setRelationLanguage(?Project $relationLanguage): self
+    {
+        $this->relationLanguage = $relationLanguage;
 
         return $this;
     }

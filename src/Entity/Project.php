@@ -35,11 +35,16 @@ class Project
     private $projectLink;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="raltionProjects")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="relationProjects")
      * @ORM\JoinColumn(nullable=false)
      */
     private $relationUser;
 
+
+
+    /**
+     * @ORM\OneToMany(targetEntity=ProjectLanguages::class, mappedBy="relationLanguage", orphanRemoval=true)
+     */
     protected $projectLanguages;
 
     public function __construct()
@@ -51,6 +56,31 @@ class Project
     {
         return $this->projectLanguages;
     }
+
+    public function addProjectLanguage(ProjectLanguages $projectLanguage): self
+    {
+        //$this->tags->add($projectLanguage);
+        if (!$this->projectLanguages->contains($projectLanguage)) {
+            $this->projectLanguages[] = $projectLanguage;
+            $projectLanguage->setRelationLanguage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProjectLanguage(ProjectLanguages $projectLanguage): self
+    {
+        if ($this->projectLanguage->removeElement($projectLanguage)) {
+            // set the owning side to null (unless already changed)
+            if ($projectLanguage->getRelationLanguage() === $this) {
+                $projectLanguage->setRelationLanguage(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 
 
     public function getId(): ?int

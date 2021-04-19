@@ -42,13 +42,21 @@ class DashboardController extends AbstractController
         if ($formProject->isSubmitted() && $formProject->isValid()) {
             $manager = $this->getDoctrine()->getManager();
 
+            // foreach ($projectLanguage as $liste) {
+            //     $project->addProjectLanguage($liste);
+            //     $manager->persist($projectLanguage);
+            // }
 
+            $projectLanguage->setRelationLanguage($projectLanguage->getId());
+            dd($projectLanguage);
+            $project->addProjectLanguage($projectLanguage);
             $user->addRelationProject($project);
 
-
+            $manager->persist($projectLanguage);
             $manager->persist($project);
             $manager->persist($user);
             $manager->flush();
+
             return $this->redirectToRoute('dashboard');
         }
 

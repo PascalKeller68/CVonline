@@ -14,21 +14,17 @@
 				{{ form_row(formProject.projectDescription, {'label': 'Description du projet','attr': {'placeholder':'Description du projet en quelques lignes'}}) }}
 				{{ form_row(formProject.projectLink, {'label': 'Lien du projet','attr': {'placeholder':'facultatif'}}) }}
 
-				<h3>Languages</h3>
-
-				<ul class="langages">
+				<h3>Langages</h3>
+				<button type="button" class="add_item_link btn btn-success" data-collection-holder-class="language">Ajouter</button>
+				<ul class="language" data-prototype="{{ form_widget(formProject.projectLanguage.vars.prototype)|e('html_attr') }}">
 					{% for language in formProject.projectLanguage %}
-						<div class="d-flex">
-							<div>
-								<li>{{ form_row(language.languageName, {'label': 'Nom du langage','attr': {'placeholder':'nom du langage utilisé pour le projet'}}) }}</li>
-							</div>
-							<div>
-								<li>{{ form_row(language.languageUse, {'label': 'Pourcentage utilisation','attr': {'placeholder':'taux utilisation du langage'}}) }}</li>
-							</div>
-						</div>
-
+						<li>
+							{{ form_row(language.languageName) }}
+							{{ form_row(language.languageUse) }}
+						</li>
 					{% endfor %}
 				</ul>
+
 
 				<button type="submit" class="btn btn-success">Créer</button>
 				{{ form_end(formProject) }}

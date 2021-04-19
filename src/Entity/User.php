@@ -193,22 +193,22 @@ class User implements UserInterface
         return $this->relationProjects;
     }
 
-    public function addRelationProject(Project $raltionProject): self
+    public function addRelationProject(Project $relationProject): self
     {
-        if (!$this->relationProjects->contains($raltionProject)) {
-            $this->relationProjects[] = $raltionProject;
-            $raltionProject->setRelationUser($this);
+        if (!$this->relationProjects->contains($relationProject)) {
+            $this->relationProjects[] = $relationProject;
+            $relationProject->setRelationUser($this);
         }
 
         return $this;
     }
 
-    public function removeRelationProject(Project $raltionProject): self
+    public function removeRelationProject(Project $relationProject): self
     {
-        if ($this->relationProjects->removeElement($raltionProject)) {
+        if ($this->relationProjects->removeElement($relationProject)) {
             // set the owning side to null (unless already changed)
-            if ($raltionProject->getRelationUser() === $this) {
-                $raltionProject->setRelationUser(null);
+            if ($relationProject->getRelationUser() === $this) {
+                $relationProject->setRelationUser(null);
             }
         }
 
