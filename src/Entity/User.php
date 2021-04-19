@@ -61,11 +61,11 @@ class User implements UserInterface
     /**
      * @ORM\OneToMany(targetEntity=Project::class, mappedBy="relationUser", orphanRemoval=true)
      */
-    private $raltionProjects;
+    private $relationProjects;
 
     public function __construct()
     {
-        $this->raltionProjects = new ArrayCollection();
+        $this->relationProjects = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -188,24 +188,24 @@ class User implements UserInterface
     /**
      * @return Collection|Project[]
      */
-    public function getRaltionProjects(): Collection
+    public function getRelationProjects(): Collection
     {
-        return $this->raltionProjects;
+        return $this->relationProjects;
     }
 
-    public function addRaltionProject(Project $raltionProject): self
+    public function addRelationProject(Project $raltionProject): self
     {
-        if (!$this->raltionProjects->contains($raltionProject)) {
-            $this->raltionProjects[] = $raltionProject;
+        if (!$this->relationProjects->contains($raltionProject)) {
+            $this->relationProjects[] = $raltionProject;
             $raltionProject->setRelationUser($this);
         }
 
         return $this;
     }
 
-    public function removeRaltionProject(Project $raltionProject): self
+    public function removeRelationProject(Project $raltionProject): self
     {
-        if ($this->raltionProjects->removeElement($raltionProject)) {
+        if ($this->relationProjects->removeElement($raltionProject)) {
             // set the owning side to null (unless already changed)
             if ($raltionProject->getRelationUser() === $this) {
                 $raltionProject->setRelationUser(null);

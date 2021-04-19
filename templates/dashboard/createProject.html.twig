@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CVOnline - Ajouter un projet
+{% endblock %}
+
+{% block body %}
+	<div class="container pt-5">
+		<div class="d-flex justify-content-center">
+			<div class="col-12 col-md-8 border border border-dark rounded p-4">
+				<h1>Ajout de projet</h1>
+
+				{{ form_start(formProject) }}
+				{{ form_row(formProject.projectName, {'label': 'Nom du projet','attr': {'placeholder':'le nom du projet'}}) }}
+				{{ form_row(formProject.projectDescription, {'label': 'Description du projet','attr': {'placeholder':'Description du projet en quelques lignes'}}) }}
+				{{ form_row(formProject.projectLink, {'label': 'Lien du projet','attr': {'placeholder':'facultatif'}}) }}
+
+				<h3>Languages</h3>
+
+				<ul class="langages">
+					{% for language in formProject.projectLanguage %}
+						<div class="d-flex">
+							<div>
+								<li>{{ form_row(language.languageName, {'label': 'Nom du langage','attr': {'placeholder':'nom du langage utilisé pour le projet'}}) }}</li>
+							</div>
+							<div>
+								<li>{{ form_row(language.languageUse, {'label': 'Pourcentage utilisation','attr': {'placeholder':'taux utilisation du langage'}}) }}</li>
+							</div>
+						</div>
+
+					{% endfor %}
+				</ul>
+
+				<button type="submit" class="btn btn-success">Créer</button>
+				{{ form_end(formProject) }}
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

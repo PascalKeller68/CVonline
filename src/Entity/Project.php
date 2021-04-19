@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\ProjectRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ProjectRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=ProjectRepository::class)
@@ -33,15 +35,23 @@ class Project
     private $projectLink;
 
     /**
-     * @ORM\Column(type="array", nullable=true)
-     */
-    private $projectLanguage = [];
-
-    /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="raltionProjects")
      * @ORM\JoinColumn(nullable=false)
      */
     private $relationUser;
+
+    protected $projectLanguages;
+
+    public function __construct()
+    {
+        $this->projectLanguages = new ArrayCollection();
+    }
+
+    public function getProjectLanguage(): Collection
+    {
+        return $this->projectLanguages;
+    }
+
 
     public function getId(): ?int
     {
@@ -80,18 +90,6 @@ class Project
     public function setProjectLink(?string $projectLink): self
     {
         $this->projectLink = $projectLink;
-
-        return $this;
-    }
-
-    public function getProjectLanguage(): ?array
-    {
-        return $this->projectLanguage;
-    }
-
-    public function setProjectLanguage(?array $projectLanguage): self
-    {
-        $this->projectLanguage = $projectLanguage;
 
         return $this;
     }
