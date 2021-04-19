@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -33,8 +34,19 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\Length(
+     *      min = 8,
+     *      max = 50,
+     *      minMessage = "Vous devez entrer au moins {{ limit }} caractères",
+     *      maxMessage = "votre mot de passe ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     private $password;
+
+    /**
+     * @Assert\EqualTo(propertyPath="password", message="Votre mot de passe n'est pas identique")
+     */
+    private $confirmPassword;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -90,7 +102,7 @@ class User implements UserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        //$roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }
@@ -113,6 +125,18 @@ class User implements UserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getConfirmPassword(): string
+    {
+        return (string) $this->confirmPassword;
+    }
+
+    public function setConfirmPassword(string $confirmPassword): self
+    {
+        $this->confirmPassword = $confirmPassword;
 
         return $this;
     }
