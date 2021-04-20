@@ -43,7 +43,7 @@ class Project
 
 
     /**
-     * @ORM\OneToMany(targetEntity=ProjectLanguages::class, mappedBy="relationLanguage", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=ProjectLanguages::class, mappedBy="relationLanguage", orphanRemoval=true, cascade={"persist"})
      */
     protected $projectLanguages;
 

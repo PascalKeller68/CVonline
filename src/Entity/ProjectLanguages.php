@@ -30,7 +30,7 @@ class ProjectLanguages
 
     /**
      * @ORM\ManyToOne(targetEntity=Project::class, inversedBy="projectLanguages")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $relationLanguage;
 

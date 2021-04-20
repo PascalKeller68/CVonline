@@ -19,8 +19,7 @@
 				<ul class="language" data-prototype="{{ form_widget(formProject.projectLanguage.vars.prototype)|e('html_attr') }}">
 					{% for language in formProject.projectLanguage %}
 						<li>
-							{{ form_row(language.languageName) }}
-							{{ form_row(language.languageUse) }}
+							{{ form_row(formProject.projectLanguage) }}
 						</li>
 					{% endfor %}
 				</ul>
