@@ -19,15 +19,32 @@ class DashboardController extends AbstractController
     #[Route('/dashboard', name: 'dashboard')]
     public function index(): Response
     {
+
+        $projects = $this->getDoctrine()
+            ->getRepository(Project::class)
+            ->findAll();
+
+        $projectLanguages = $this->getDoctrine()
+            ->getRepository(ProjectLanguages::class)
+            ->findAll();
+
         return $this->render('dashboard/dashboard.html.twig', [
             'controller_name' => 'DashboardController',
+            'projects' => $projects,
+            'projectLanguages' => $projectLanguages
         ]);
     }
 
+
+
     #[Route('/createProject', name: 'create_project')]
-    public function createProject(Request $request, ManagerRegistry $manager, UserPasswordEncoderInterface $encoder): Response
+    #[Route('/project/{id}/edit', name: 'edit_project')]
+    public function formProject(Project $project = null, Request $request, ManagerRegistry $manager, UserPasswordEncoderInterface $encoder): Response
     {
-        $project = new Project();
+        if (!$project) {
+            $project = new Project();
+        }
+
 
         $user = $this->getDoctrine()
             ->getRepository(User::class)

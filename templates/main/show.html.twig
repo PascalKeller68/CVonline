@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CVOnline - Accueil
+{% endblock %}
+
+{% block body %}
+	<h1>{{ project.projectName}}</h1>
+	<p>{{ project.projectDescription}}</p>
+
+	{% for projectLanguage in projectLanguages %}
+
+		<ul>
+			<li>{{projectLanguage.languageName}}
+				:
+				{{projectLanguage.languageUse}}
+				%</li>
+		</ul>
+
+	{% endfor %}
+{% endblock %}

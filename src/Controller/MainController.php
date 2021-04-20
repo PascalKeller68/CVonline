@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Project;
+use App\Entity\ProjectLanguages;
 use App\Entity\User;
 use App\Form\FormRegistrationType;
 use Doctrine\Persistence\ManagerRegistry;
@@ -50,7 +52,7 @@ class MainController extends AbstractController
     }
 
 
-    #[Route('login', name: 'app_login')]
+    #[Route('/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
@@ -65,12 +67,24 @@ class MainController extends AbstractController
         return $this->render('main/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
-    /**
-     * @Route("/logout", name="app_logout")
-     */
-    #[Route('logout', name: 'app_logout')]
+    #[Route('/logout', name: 'app_logout')]
     public function logout()
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+    }
+
+    #[Route('/project/{id}', name: 'show_project')]
+    public function show($id)
+    {
+        $project = $this->getDoctrine()->getRepository(Project::class)->find($id);
+        $projectLanguages = $this->getDoctrine()->getRepository(ProjectLanguages::class)->findBy(['relationLanguage' => $project]);
+
+        return $this->render(
+            'main/show.html.twig',
+            [
+                'project' => $project,
+                'projectLanguages' => $projectLanguages,
+            ]
+        );
     }
 }
