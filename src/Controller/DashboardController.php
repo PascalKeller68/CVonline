@@ -77,7 +77,7 @@ class DashboardController extends AbstractController
     }
 
 
-    #[Route('/project/{id}/edit', name: 'edit_project')]
+    #[Route('/dashboard/edit/{id}', name: 'edit_project')]
     public function edit($id, Request $request, ManagerRegistry $entityManager): Response
     {
         if (null === $project = $entityManager->getRepository(Project::class)->find($id)) {
