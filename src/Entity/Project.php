@@ -70,12 +70,7 @@ class Project
 
     public function removeProjectLanguage(ProjectLanguages $projectLanguage): self
     {
-        if ($this->projectLanguage->removeElement($projectLanguage)) {
-            // set the owning side to null (unless already changed)
-            if ($projectLanguage->getRelationLanguage() === $this) {
-                $projectLanguage->setRelationLanguage(null);
-            }
-        }
+        $this->projectLanguages->removeElement($projectLanguage);
 
         return $this;
     }

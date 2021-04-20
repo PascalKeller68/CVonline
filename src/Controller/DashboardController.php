@@ -4,13 +4,14 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Project;
-use App\Entity\ProjectLanguages;
 use App\Form\FormProjectType;
-use Doctrine\Persistence\ManagerRegistry;
 use PhpParser\Node\Expr\Empty_;
+use App\Entity\ProjectLanguages;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -38,13 +39,10 @@ class DashboardController extends AbstractController
 
 
     #[Route('/createProject', name: 'create_project')]
-    #[Route('/project/{id}/edit', name: 'edit_project')]
-    public function formProject(Project $project = null, Request $request, ManagerRegistry $manager, UserPasswordEncoderInterface $encoder): Response
+    public function formProject(Request $request, ManagerRegistry $manager, UserPasswordEncoderInterface $encoder): Response
     {
-        if (!$project) {
-            $project = new Project();
-        }
 
+        $project = new Project();
 
         $user = $this->getDoctrine()
             ->getRepository(User::class)
@@ -75,6 +73,57 @@ class DashboardController extends AbstractController
         return $this->render('dashboard/createProject.html.twig', [
             'controller_name' => 'DashboardController',
             'formProject' => $formProject->createView()
+        ]);
+    }
+
+
+    #[Route('/project/{id}/edit', name: 'edit_project')]
+    public function edit($id, Request $request, ManagerRegistry $entityManager): Response
+    {
+        if (null === $project = $entityManager->getRepository(Project::class)->find($id)) {
+            throw $this->createNotFoundException('No project found for id ' . $id);
+        }
+
+        // $projectLanguages = $this->getDoctrine()->getRepository(ProjectLanguages::class)->findBy(['relationLanguage' => $project]);
+        $originalLanguages = new ArrayCollection();
+
+        // Create an ArrayCollection of the current Tag objects in the database
+        foreach ($project->getProjectLanguage() as $projectLanguages) {
+            $originalLanguages->add($projectLanguages);
+        }
+
+        $editForm = $this->createForm(FormProjectType::class, $project);
+
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            // remove the relationship between the projectLanguages and the project
+            foreach ($originalLanguages as $projectLanguages) {
+                if (false === $project->getProjectLanguage()->contains($projectLanguages)) {
+                    // remove the project from the Tag
+                    //$projectLanguages->getProjectLanguage()->removeElement($project);
+
+                    // if it was a many-to-one relationship, remove the relationship like this
+                    $projectLanguages->setRelationLanguage(null);
+
+                    $entityManager->persist($projectLanguages);
+
+                    // if you wanted to delete the Tag entirely, you can also do that
+                    // $entityManager->remove($projectLanguages);
+                }
+            }
+
+            $entityManager->persist($project);
+            $entityManager->flush();
+
+            // redirect back to some edit page
+            return $this->redirectToRoute('dashboard');
+        }
+
+        return $this->render('dashboard/createProject.html.twig', [
+            'controller_name' => 'DashboardController',
+            'formProject' => $editForm->createView()
         ]);
     }
 }

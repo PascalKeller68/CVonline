@@ -17,14 +17,10 @@
 				<h3>Langages</h3>
 				<button type="button" class="add_item_link btn btn-success" data-collection-holder-class="language">Ajouter</button>
 				<ul class="language" data-prototype="{{ form_widget(formProject.projectLanguage.vars.prototype)|e('html_attr') }}">
-					{% for language in formProject.projectLanguage %}
-						<li>
-							{{ form_row(formProject.projectLanguage) }}
-						</li>
+					{% for item in formProject.projectLanguage %}
+						<li>{{ form_row(item) }}</li>
 					{% endfor %}
 				</ul>
-
-
 				<button type="submit" class="btn btn-success">Créer</button>
 				{{ form_end(formProject) }}
 			</div>
