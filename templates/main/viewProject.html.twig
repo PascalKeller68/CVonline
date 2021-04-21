@@ -11,30 +11,38 @@
 
 		<div class="mt-3">
 
-			{% for project in projects %}
-				<div class="d-flex justify-content-between border m-1 p-2 rounded">
-					<div class="">
-						<div>
+			{% for project in paginationProject %}
+				<div class="row d-flex justify-content-between border m-1 p-2 rounded">
+					<div class="col-9">
+						<div class="row">
 							<h3>{{ project.projectName}}</h3>
 						</div>
-						{% for projectLanguage in projectLanguages %}
-							{% if project.Id ==  projectLanguage.relationLanguage.id %}
+						<div class="row">
+							{% for projectLanguage in projectLanguages %}
+								{% if project.Id ==  projectLanguage.relationLanguage.id %}
 
-								{{ projectLanguage.languageName}}
-								:
-								{{ projectLanguage.languageUse}}
-								% ;
+									{{ projectLanguage.languageName}}
+									:
+									{{ projectLanguage.languageUse}}
+									% ;
 
-							{% endif %}
-						{% endfor %}
+								{% endif %}
+							{% endfor %}
+						</div>
 					</div>
-					<div>
-						<a href="{{ path('show_project', { 'id': project.id}) }}" class="btn btn-info">voir</a>
+					<div class="col-3 d-flex flex-row-reverse align-items-center">
+						<div>
+							<a href="{{ path('show_project', { 'id': project.id}) }}" class="btn btn-info">voir</a>
+						</div>
 					</div>
 
 				</div>
 			{% endfor %}
 
+
+			<div class="navigation d-flex justify-content-center">
+				{{ knp_pagination_render(paginationProject) }}
+			</div>
 
 		</div>
 

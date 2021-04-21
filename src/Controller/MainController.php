@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Project;
 use App\Entity\ProjectLanguages;
-use App\Entity\User;
 use App\Form\FormRegistrationType;
+use App\Repository\ProjectRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -74,21 +76,24 @@ class MainController extends AbstractController
     }
 
     #[Route('/project/view', name: 'view_project')]
-    public function index(): Response
+    public function index(PaginatorInterface $paginator, ProjectRepository $repositoryProject, Request $request): Response
     {
 
-        $projects = $this->getDoctrine()
-            ->getRepository(Project::class)
-            ->findAll();
 
         $projectLanguages = $this->getDoctrine()
             ->getRepository(ProjectLanguages::class)
             ->findAll();
 
+        $queryBuilder = $repositoryProject->getQueryBuilderAllProject();
+        $paginationProject = $paginator->paginate(
+            $queryBuilder, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            2/*limit per page*/
+        );
         return $this->render('main/viewProject.html.twig', [
             'controller_name' => 'MainController',
-            'projects' => $projects,
-            'projectLanguages' => $projectLanguages
+            'projectLanguages' => $projectLanguages,
+            'paginationProject' => $paginationProject
         ]);
     }
 
