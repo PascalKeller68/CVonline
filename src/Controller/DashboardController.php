@@ -22,9 +22,6 @@ class DashboardController extends AbstractController
     #[Route('/dashboard', name: 'dashboard')]
     public function index(PaginatorInterface $paginator, ProjectRepository $repositoryProject, Request $request): Response
     {
-
-
-
         $projectLanguages = $this->getDoctrine()
             ->getRepository(ProjectLanguages::class)
             ->findAll();
@@ -45,9 +42,7 @@ class DashboardController extends AbstractController
         ]);
     }
 
-
-
-    #[Route('/createProject', name: 'create_project')]
+    #[Route('/dashboard/createProject', name: 'create_project')]
     public function formProject(Request $request, ManagerRegistry $manager, UserPasswordEncoderInterface $encoder): Response
     {
 
@@ -110,16 +105,9 @@ class DashboardController extends AbstractController
             // remove the relationship between the projectLanguages and the project
             foreach ($originalLanguages as $projectLanguages) {
                 if (false === $project->getProjectLanguage()->contains($projectLanguages)) {
-                    // remove the project from the Tag
-                    //$projectLanguages->getProjectLanguage()->removeElement($project);
-
-                    // if it was a many-to-one relationship, remove the relationship like this
                     $projectLanguages->setRelationLanguage(null);
 
                     $entityManager->persist($projectLanguages);
-
-                    // if you wanted to delete the Tag entirely, you can also do that
-                    // $entityManager->remove($projectLanguages);
                 }
             }
 
@@ -134,5 +122,41 @@ class DashboardController extends AbstractController
             'controller_name' => 'DashboardController',
             'formProject' => $editForm->createView()
         ]);
+    }
+
+    #[Route('/dashboard/delete/{id}', name: 'delete_project')]
+    public function deleteProject($id, Request $request, ManagerRegistry $manager, UserPasswordEncoderInterface $encoder): Response
+    {
+        $user = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->find($this->getUser()->getId());
+
+        $project = $this->getDoctrine()
+            ->getRepository(Project::class)
+            ->find($id);
+
+        $projectlanguages = $this->getDoctrine()
+            ->getRepository(ProjectLanguages::class)
+            ->findBy(['relationLanguage' => $id]);
+
+        $manager = $this->getDoctrine()->getManager();
+
+        if (!empty($projectLanguage)) {
+
+            foreach ($$projectlanguages as $projectLanguage) {
+
+                $projectLanguage->setRelationLanguage(null);
+                $project->removeProjectLanguage($projectLanguage);
+                $manager->persist($projectLanguage);
+                $manager->persist($project);
+            }
+        }
+
+        $user->removeRelationProject($project);
+        $manager->persist($project);
+        $manager->persist($user);
+        $manager->flush();
+
+        return $this->redirectToRoute('dashboard');
     }
 }
