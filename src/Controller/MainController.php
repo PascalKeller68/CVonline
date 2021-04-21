@@ -73,6 +73,25 @@ class MainController extends AbstractController
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
+    #[Route('/project/view', name: 'view_project')]
+    public function index(): Response
+    {
+
+        $projects = $this->getDoctrine()
+            ->getRepository(Project::class)
+            ->findAll();
+
+        $projectLanguages = $this->getDoctrine()
+            ->getRepository(ProjectLanguages::class)
+            ->findAll();
+
+        return $this->render('main/viewProject.html.twig', [
+            'controller_name' => 'MainController',
+            'projects' => $projects,
+            'projectLanguages' => $projectLanguages
+        ]);
+    }
+
     #[Route('/project/{id}', name: 'show_project')]
     public function show($id)
     {
