@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Project;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Project|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +18,18 @@ class ProjectRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Project::class);
+    }
+
+    /**
+     * @param string|null $term
+     */
+    public function getQueryBuilderAllProject(): QueryBuilder
+    {
+
+        $qb = $this->createQueryBuilder('p')
+            ->select('p');
+        //->from('project', 'p');
+        return $qb;
     }
 
     // /**

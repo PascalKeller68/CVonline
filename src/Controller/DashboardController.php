@@ -7,7 +7,9 @@ use App\Entity\Project;
 use App\Form\FormProjectType;
 use PhpParser\Node\Expr\Empty_;
 use App\Entity\ProjectLanguages;
+use App\Repository\ProjectRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,21 +20,27 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class DashboardController extends AbstractController
 {
     #[Route('/dashboard', name: 'dashboard')]
-    public function index(): Response
+    public function index(PaginatorInterface $paginator, ProjectRepository $repositoryProject, Request $request): Response
     {
 
-        $projects = $this->getDoctrine()
-            ->getRepository(Project::class)
-            ->findAll();
+
 
         $projectLanguages = $this->getDoctrine()
             ->getRepository(ProjectLanguages::class)
             ->findAll();
 
+        $queryBuilder = $repositoryProject->getQueryBuilderAllProject();
+        $paginationProject = $paginator->paginate(
+            $queryBuilder, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            2/*limit per page*/
+        );
+
         return $this->render('dashboard/dashboard.html.twig', [
             'controller_name' => 'DashboardController',
-            'projects' => $projects,
-            'projectLanguages' => $projectLanguages
+
+            'projectLanguages' => $projectLanguages,
+            'paginationProject' => $paginationProject
         ]);
     }
 

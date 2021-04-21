@@ -4,38 +4,22 @@
 {% endblock %}
 
 {% block body %}
-	<style>
-		.example-wrapper {
-			margin: 1em auto;
-			max-width: 800px;
-			width: 95%;
-			font: 18px / 1.5 sans-serif;
-		}
-		.example-wrapper code {
-			background: #F5F5F5;
-			padding: 2px 6px;
-		}
-	</style>
+	<div class="d-flex justify-content-center m-5">
+		<div class="w-75">
+			<h1>Bienvenus</h1>
+			<p>Bonjour et bienvenus sur mon site CVOnline, je l'ai entièrement créer dans le but de me présenter auprès des recruteurs
+			</p>
+			<p>Grace à lui, vous allez pouvoir :</p>
+			<ul>
+				<li>Télécharger mon CV au format PDF</li>
+				<li>Consulter les divers projets auquel j'ai participé</li>
+				<li>Me contacter</li>
 
-	<div class="example-wrapper">
-		<h1>Hello tous le monde
-			{{ controller_name }}! ✅</h1>
+			</ul>
 
-		This friendly message is coming from:
-		<ul>
-			<li>Your controller at
-				<code>
-					<a href="{{ 'C:/symfony/CVonline/src/Controller/MainController.php'|file_link(0) }}">src/Controller/MainController.php</a>
-				</code>
-			</li>
-			<li>Your template at
-				<code>
-					<a href="{{ 'C:/symfony/CVonline/templates/main/index.html.twig'|file_link(0) }}">templates/main/index.html.twig</a>
-				</code>
-			</li>
-
-		</ul>
+			<h2>Qui suis-je</h2>
+			<p>Je me présente, Keller Pascal, fort d'un parcours de 12 ans en tant que dessinateur-projeteur CAO électrique dans le domaine des machines spéciales, mon envie de création et ma passion, liée au code informatique, m'ont poussé à passé le capes de la reconversion professionnelle. Aujourd'hui, je suis un développeur full-stack web plein de ressources avec une option lié à la conception des applications mobiles.
+			</p>
+		</div>
 	</div>
-
-
 {% endblock %}
