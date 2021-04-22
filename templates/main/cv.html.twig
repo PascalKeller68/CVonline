@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CVOnline - CV
+{% endblock %}
+
+{% block body %}
+
+
+	<div>
+		<div>
+			<h1>Curriculum Vitae</h1>
+			<p>Dans cette section vous allez pouvoir télécharger mon CV au format PDF</p>
+			<p>Il vous suffit de cliquer sur le bouton ci-dessous</p>
+		</div>
+		<div>
+			<a class="btn btn-success" href="{{ asset('uploads/' ~ 'curriculum_vitae.pdf') }}">Télécharger mon CV (PDF)</a>
+		</div>
+
+	</div>
+
+
+{% endblock %}

@@ -4,12 +4,15 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Project;
+use App\Form\ContactType;
 use App\Entity\ProjectLanguages;
+use Symfony\Component\Mime\Email;
 use App\Form\FormRegistrationType;
 use App\Repository\ProjectRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,6 +28,49 @@ class MainController extends AbstractController
             'controller_name' => 'MainController',
         ]);
     }
+
+    #[Route('/cv', name: 'cv')]
+    public function showCv(): Response
+    {
+        return $this->render('main/cv.html.twig', [
+            'controller_name' => 'MainController',
+        ]);
+    }
+
+
+    #[Route('/contact', name: 'contact')]
+    public function contact(Request $request, MailerInterface $mailer)
+    {
+        $form = $this->createForm(ContactType::class);
+
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $contactFormData = $form->getData();
+
+            $message = (new Email())
+                ->from($contactFormData['email'])
+                ->to('cvonlinepascalkeller@gmail.com')
+                ->subject('Vous avez un mail de CVOnline')
+                ->text(
+                    'Expéditeur : ' . $contactFormData['email'] . \PHP_EOL .
+                        $contactFormData['message'],
+                    'text/plain'
+                );
+            $mailer->send($message);
+            $this->addFlash('success', 'Votre email a bien été envoyé');
+            return $this->redirectToRoute('contact');
+        }
+
+
+
+        return $this->render('main/contact.html.twig', [
+            'our_form' => $form->createView()
+        ]);
+    }
+
 
     #[Route('/createAccount', name: 'create_account')]
     public function createAccount(Request $request, ManagerRegistry $manager, UserPasswordEncoderInterface $encoder): Response
