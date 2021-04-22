@@ -7,7 +7,7 @@
 			{% endblock %}
 		</title>
 		{# Run `composer require symfony/webpack-encore-bundle`
-																																																																																																																																																																																																																																																		           and uncomment the following Encore helpers to start using Symfony UX #}
+																																																																																																																																																																																																																																																																										           and uncomment the following Encore helpers to start using Symfony UX #}
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
@@ -18,7 +18,7 @@
 
 		<div class="container-fluid">
 			<div class="row">
-				<aside class="col-12 col-md-2 p-0 bg-dark taillelateral">
+				<aside class="col-12 col-md-2 p-0 bg-dark roundedaside">
 					<nav class="navbar navbar-expand-lg navbar-dark bg-dark flex-md-column flex-row align-items-start">
 						<a class="navbar-brand" href="#">CV Online</a>
 						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,22 +31,26 @@
 								<li {% if app.request.attributes.get( '_route' ) starts with 'accueil' %} class="nav-item active" {% endif %}>
 									<a class="nav-link" href="{{ path('accueil')}}">Accueil</a>
 								</li>
-								{% if not app.user %}
-									<li {% if app.request.attributes.get( '_route' ) starts with 'create_account' %} class="nav-item active" {% endif %}>
-										<a class="nav-link" href="{{ path('create_account')}}">Créer un compte</a>
-									</li>
-								{% endif %}
+
 								{% if app.user %}
 									<li {% if app.request.attributes.get( '_route' ) starts with 'dashboard' %} class="nav-item active" {% endif %}>
 										<a class="nav-link" href="{{ path('dashboard')}}">Tableau de bord</a>
 									</li>
 								{% endif %}
-								<li {% if app.request.attributes.get( '_route' ) starts with '#' %} class="nav-item active" {% endif %}>
+								<li {% if app.request.attributes.get( '_route' ) starts with 'cv' %} class="nav-item active" {% endif %}>
 									<a class="nav-link" href="{{ path('cv')}}">CV</a>
 								</li>
-								<li {% if app.request.attributes.get( '_route' ) starts with '#' %} class="nav-item active" {% endif %}>
+								<li {% if app.request.attributes.get( '_route' ) starts with 'view_project' %} class="nav-item active" {% endif %}>
 									<a class="nav-link" href="{{ path('view_project')}}">Projets</a>
 								</li>
+								<li {% if app.request.attributes.get( '_route' ) starts with 'contact' %} class="nav-item active" {% endif %}>
+									<a class="nav-link" href="{{ path('contact')}}">Contact</a>
+								</li>
+								{% if not app.user %}
+									<li {% if app.request.attributes.get( '_route' ) starts with 'create_account' %} class="nav-item active" {% endif %}>
+										<a class="nav-link" href="{{ path('create_account')}}">Créer un compte</a>
+									</li>
+								{% endif %}
 
 								{% if not app.user %}
 									<li {% if app.request.attributes.get( '_route' ) starts with 'app_login' %} class="nav-item active" {% endif %}>

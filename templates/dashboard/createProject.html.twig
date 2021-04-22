@@ -21,9 +21,11 @@
 						<li>{{ form_row(item) }}</li>
 					{% endfor %}
 				</ul>
-				<button type="submit" class="btn btn-success">Créer</button>
-				<a href="{{ path('dashboard')}}" class="btn btn-danger">Annuler</a>
-				{{ form_end(formProject) }}
+				<div>
+					<button type="submit" class="btn btn-success">Créer</button>
+					<a href="{{ path('dashboard')}}" class="btn btn-danger">Annuler</a>
+					{{ form_end(formProject) }}
+				</div>
 			</div>
 		</div>
 	</div>

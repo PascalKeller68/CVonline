@@ -134,7 +134,7 @@ class MainController extends AbstractController
         $paginationProject = $paginator->paginate(
             $queryBuilder, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
-            2/*limit per page*/
+            10/*limit per page*/
         );
         return $this->render('main/viewProject.html.twig', [
             'controller_name' => 'MainController',
