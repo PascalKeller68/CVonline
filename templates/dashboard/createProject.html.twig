@@ -7,7 +7,13 @@
 	<div class="container pt-5">
 		<div class="d-flex justify-content-center">
 			<div class="col-12 col-md-8 border border border-dark rounded p-4">
-				<h1>Ajout de projet</h1>
+				<h1>
+					{% if editMode %}
+						Modification du projet
+					{% else %}
+						Ajout de projet
+					{% endif %}
+				</h1>
 
 				{{ form_start(formProject) }}
 				{{ form_row(formProject.projectName, {'label': 'Nom du projet','attr': {'placeholder':'le nom du projet'}}) }}
@@ -22,7 +28,13 @@
 					{% endfor %}
 				</ul>
 				<div>
-					<button type="submit" class="btn btn-success">Créer</button>
+					<button type="submit" class="btn btn-success">
+						{% if editMode %}
+							Modifier
+						{% else %}
+							Créer
+						{% endif %}
+					</button>
 					<a href="{{ path('dashboard')}}" class="btn btn-danger">Annuler</a>
 					{{ form_end(formProject) }}
 				</div>

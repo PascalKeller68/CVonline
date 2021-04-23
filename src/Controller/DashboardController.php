@@ -120,7 +120,8 @@ class DashboardController extends AbstractController
 
         return $this->render('dashboard/createProject.html.twig', [
             'controller_name' => 'DashboardController',
-            'formProject' => $editForm->createView()
+            'formProject' => $editForm->createView(),
+            'editMode' => true
         ]);
     }
 
