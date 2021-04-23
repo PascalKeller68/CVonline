@@ -15,8 +15,16 @@ class FormProjectLanguageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('languageName', TextType::class, ['attr' => ['label' => 'Nom du langage'],])
-            ->add('languageUse', IntegerType::class, ['attr' => ['label' => 'du langage'],]);
+            ->add('languageName', TextType::class, ['attr' => [
+                'label' => 'Nom du langage',
+                'placeholder' => 'Nom du langage'
+            ],])
+            ->add('languageUse', IntegerType::class, ['attr' => [
+                'label' => 'du langage',
+                'min' => 0,
+                'max' => 100,
+                'placeholder' => 'Pourcentage du langage utiliser - Voir github'
+            ],]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

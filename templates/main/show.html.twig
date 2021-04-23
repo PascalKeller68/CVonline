@@ -8,11 +8,15 @@
 		<div>
 			<h1 class=" m-5">{{ project.projectName}}</h1>
 			<div class="border border-dark rounded p-2 mb-2">
-				<label for="">Description :</label>
+				<label for="">
+					<U>Description :</U>
+				</label>
 				<p>{{ project.projectDescription}}</p>
 			</div>
 			<div class="border border-dark rounded p-2">
-				<label for="">Langages utilisés :</label>
+				<label for="">
+					<U>Langages utilisés :</U>
+				</label>
 				<ul>
 					{% for projectLanguage in projectLanguages %}
 
@@ -23,23 +27,18 @@
 							%
 						</li>
 					{% endfor %}
-					<div class="progress">
-
-						{% for projectLanguage in projectLanguages %}
-							<div class="progress-bar" role="progressbar" style="width: {{projectLanguage.languageUse}}%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-						{% endfor %}
-					</div>
-
 
 				</ul>
 			</div>
 			<div class="mt-2 mb-2 border border-dark rounded p-2">
 				<div>
-					<label for="">Lien :</label>
+					<label for="">
+						<U>Lien :</U>
+					</label>
 					{% if project.projectLink %}
-						<a class=" btn btn-info" href="{{ project.projectLink}}">Cliquer ici</a>
+						<a class=" btn btn-info" target="_blank" href="{{ project.projectLink}}">Cliquer ici</a>
 					{% else %}
-						<p>Aucun lien ajouter à ce projet</p>
+						<p>Aucun lien ajouter à ce projet actuellement</p>
 					{% endif %}
 				</div>
 

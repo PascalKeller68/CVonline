@@ -30,7 +30,7 @@ class DashboardController extends AbstractController
         $paginationProject = $paginator->paginate(
             $queryBuilder, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
-            10/*limit per page*/
+            6/*limit per page*/
         );
 
         //$paginationProject->Configurator('knp_paginator');
@@ -76,7 +76,8 @@ class DashboardController extends AbstractController
 
         return $this->render('dashboard/createProject.html.twig', [
             'controller_name' => 'DashboardController',
-            'formProject' => $formProject->createView()
+            'formProject' => $formProject->createView(),
+            'editMode' => false
         ]);
     }
 
