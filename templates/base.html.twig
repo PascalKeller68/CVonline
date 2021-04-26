@@ -37,12 +37,14 @@
 										<a class="nav-link" href="{{ path('dashboard')}}">Tableau de bord</a>
 									</li>
 								{% endif %}
-								<li {% if app.request.attributes.get( '_route' ) starts with 'cv' %} class="nav-item active" {% endif %}>
-									<a class="nav-link" href="{{ path('cv')}}">CV</a>
-								</li>
 								<li {% if app.request.attributes.get( '_route' ) starts with 'view_project' %} class="nav-item active" {% endif %}>
 									<a class="nav-link" href="{{ path('view_project')}}">Projets</a>
 								</li>
+								
+								<li {% if app.request.attributes.get( '_route' ) starts with 'cv' %} class="nav-item active" {% endif %}>
+									<a class="nav-link" href="{{ path('cv')}}">CV</a>
+								</li>
+								
 								<li {% if app.request.attributes.get( '_route' ) starts with 'contact' %} class="nav-item active" {% endif %}>
 									<a class="nav-link" href="{{ path('contact')}}">Contact</a>
 								</li>

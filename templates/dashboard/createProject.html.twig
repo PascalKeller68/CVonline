@@ -18,7 +18,7 @@
 				{{ form_start(formProject) }}
 				{{ form_row(formProject.projectName, {'label': 'Nom du projet','attr': {'placeholder':'le nom du projet'}}) }}
 				{{ form_row(formProject.projectDescription, {'label': 'Description du projet','attr': {'placeholder':'Description du projet en quelques lignes'}}) }}
-				{{ form_row(formProject.projectLink, {'label': 'Lien du projet','attr': {'placeholder':'facultatif'}}) }}
+				{{ form_row(formProject.projectLink, {'label': 'Lien du projet','attr': {'placeholder':'facultatif', 'size': '10'}}) }}
 
 				<h3>Langages</h3>
 				<button type="button" class="add_item_link btn btn-success" data-collection-holder-class="language">Ajouter</button>
