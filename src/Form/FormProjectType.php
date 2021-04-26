@@ -18,7 +18,7 @@ class FormProjectType extends AbstractType
         $builder
             ->add('projectName', TextType::class, ['required' => true])
             ->add('projectDescription', TextareaType::class, ['required' => true])
-            ->add('projectLink', UrlType::class)
+            ->add('projectLink', UrlType::class, ['required' => false])
             ->add('projectLanguage', CollectionType::class, [
                 'entry_type' => FormProjectLanguageType::class,
                 'entry_options' => ['label' => false],
