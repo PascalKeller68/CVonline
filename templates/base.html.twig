@@ -46,11 +46,11 @@
 								<li {% if app.request.attributes.get( '_route' ) starts with 'contact' %} class="nav-item active" {% endif %}>
 									<a class="nav-link" href="{{ path('contact')}}">Contact</a>
 								</li>
-								{% if not app.user %}
+								{# {% if not app.user %}
 									<li {% if app.request.attributes.get( '_route' ) starts with 'create_account' %} class="nav-item active" {% endif %}>
 										<a class="nav-link" href="{{ path('create_account')}}">Créer un compte</a>
 									</li>
-								{% endif %}
+								{% endif %} #}
 
 								{% if not app.user %}
 									<li {% if app.request.attributes.get( '_route' ) starts with 'app_login' %} class="nav-item active" {% endif %}>
