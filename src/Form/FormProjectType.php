@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class FormProjectType extends AbstractType
 {
@@ -16,7 +17,7 @@ class FormProjectType extends AbstractType
     {
         $builder
             ->add('projectName', TextType::class, ['required' => true])
-            ->add('projectDescription', TextType::class, ['required' => true])
+            ->add('projectDescription', TextareaType::class, ['required' => true])
             ->add('projectLink', UrlType::class)
             ->add('projectLanguage', CollectionType::class, [
                 'entry_type' => FormProjectLanguageType::class,
